@@ -13,3 +13,10 @@ Scrapping the comments is being done using Youtube API. The logic being:
 4. Extract the comment ID of this commentsing this as the parent ID, extract all the child comments. 
 5. Save the child comments along with the username of the commentor and the video that the comment was made in a pandas dataframe.
 6. Export this dataframe as a .xlsx file to use in further analysis.
+
+# Classification
+Since this is a binary choice i.e. questions or not, Support Vector Machines prove to be the best classifier. Certain unique cleaning steps taking to make classification easier are:  
+1. Subtituting hyperlinks made in replies by the word 'hyperlink'.  
+2. Whenever a user replies to a child comment, the '@' prefix is used. These replies are generally answers to the child comment. Hence '@' is substituted by 'answer' in these replies.  
+3. The '?' sign is replaced by the word 'question'.  
+After this, stopwords are removed and a vocabulary is built of the remaining words in the dataset. This vocabulary is used to convert the comments into TF-IDF transformed vectors. To train the support vector classifier, a subset of all the comments (about 1000) are manually tagged in the file 'questions_trainer.xlsx'. After training on this file, the SVC can be used to classify the entire dataset. SVC obtained a training accuracy of 0.89.
